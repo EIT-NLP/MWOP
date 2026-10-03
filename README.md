@@ -25,15 +25,12 @@
 >
 > Contact: [haowu.83@sjtu.edu.cn](mailto:haowu.83@sjtu.edu.cn), [xyshen@eitech.edu.cn](mailto:xyshen@eitech.edu.cn)
 
-MWOP prunes attention operations and FFN channels according to their modality-specific importance. It separates visual-to-visual (V2V), text-to-visual (T2V), and text-to-text (T2T) attention, estimates Taylor importance across four benchmark categories, and recovers model quality with LoRA.
-
-This repository provides the **LLaVA-OneVision-7B (OV-7B)** implementation of MWOP, including importance estimation, fixed attention and FFN masks, recovery training, evaluation, and CUDA decoder acceleration.
 
 <p align="center">
   <img src="assets/mwop_overview.png" alt="Overview of the MWOP method" width="900">
 </p>
 
-If MWOP is useful for your research, please cite:
+If you find this work useful for your research and applications, please consider citing:
 
 ```bibtex
 @misc{wang2026mwopmodalityawarewidthwiseoperation,
@@ -49,14 +46,17 @@ If MWOP is useful for your research, please cite:
 
 ## 🔥 News <a id="news"></a>
 
-- **[2026.10.01]** The [MWOP preprint](https://arxiv.org/abs/2610.01434) is available on arXiv.
+- [TODO] Checkpoints are being prepared and will be released soon. 
+- **[2026.10.03]** The code is now published!
+- **[2026.10.01]** The preprint is now published!
 
 ## 💡 Highlights <a id="highlights"></a>
 
-- **Modality-aware operation pruning:** independently prune attention paths and visual FFN channels while retaining text FFN computation.
-- **Four-category importance aggregation:** combine General, Reasoning, OCR, and Grounding rankings with Universal-Max aggregation.
-- **Quality recovery:** LoRA fine-tuning with fixed pruning masks.
-- **Composable acceleration:** OV decoder kernels and frozen schedules for MWOP, MWOP + ZOO, and MWOP + PyramidDrop.
+- **Modality-aware Width-wise Operation Pruning:** Independently prune attention paths (V2V, T2V, T2T) and visual FFN channels while retaining text FFN computation.
+- **Cross-category Importance Estimation:** Estimates Taylor importance across General, Reasoning, OCR, and Grounding benchmarks to guide pruning.
+- **Compression-aware Post-Training:** Recovers performance through LoRA post-training using attention and FFN pruning masks determined offline and kept fixed throughout training.
+- **Compatibility with Token Pruning**: Can be combined with token compression methods for further inference acceleration.
+- **Practical GPU Acceleration:** Implements Triton kernels that skip pruned attention regions and packs retained visual FFN channels into compact weight matrices for faster decoder prefill.
 
 Results for **OV-7B** from the [MWOP paper](https://arxiv.org/abs/2610.01434):
 
@@ -256,14 +256,19 @@ This implementation builds on [LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeX
 
 ## ✉️ Contact <a id="contact"></a>
 
-For questions, feedback, or collaboration, please contact:
+For questions, suggestions, or collaboration opportunities, please feel free to reach out:
 
 - **Hao Wu:** [haowu.83@sjtu.edu.cn](mailto:haowu.83@sjtu.edu.cn)
 - **Xiaoyu Shen:** [xyshen@eitech.edu.cn](mailto:xyshen@eitech.edu.cn)
 
 ## 🌐 Related Projects <a id="projects"></a>
+- Survey
+  - [Awesome-MLLM-Compression] [From Data to Model: A Survey of the Compression Lifecycle in MLLMs](https://github.com/EIT-NLP/Awesome-MLLM-Compression)
+- Vision Encoder
+  - [CVPR 2026] [UTPTrack: Towards Simple and Unified Token Pruning for Visual Trackingrack](https://github.com/EIT-NLP/UTPTrack)
 
-- [HiDrop](https://github.com/EIT-NLP/HiDrop): Hierarchical vision token reduction in MLLMs.
-- [UTPTrack](https://github.com/EIT-NLP/UTPTrack): Unified token pruning for visual tracking.
-- [VisiPruner](https://github.com/EIT-NLP/VisiPruner): Efficient MLLMs through cross-modal dynamics.
-- [Awesome-MLLM-Compression](https://github.com/EIT-NLP/Awesome-MLLM-Compression): Resources on the MLLM compression lifecycle.
+- ImageLLM
+  - [EMNLP 2025] [VisiPruner: Decoding Discontinuous Cross-Modal Dynamics for Efficient Multimodal LLMs](https://github.com/EIT-NLP/VisiPruner)
+  - [ICLR 2026] [HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit](https://github.com/EIT-NLP/HiDrop)
+  - [Preprint] [ViCA: Efficient Multimodal LLMs with Vision-Only Cross-Attention
+](https://github.com/EIT-NLP/ViCA)
