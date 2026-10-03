@@ -36,13 +36,14 @@ This repository provides the **LLaVA-OneVision-7B (OV-7B)** implementation of MW
 If MWOP is useful for your research, please cite:
 
 ```bibtex
-@article{wang2026mwop,
-  title={MWOP: Modality-aware Width-wise Operation Pruning for Efficient MLLMs},
-  author={Wang, Xudong and Wu, Hao and Hu, Haozhe and Yin, Peiran and
-          Chen, Xinghao and Ma, Yunpu and Zhang, Wei and Shen, Xiaoyu},
-  journal={arXiv preprint arXiv:2610.01434},
-  year={2026},
-  url={https://arxiv.org/abs/2610.01434}
+@misc{wang2026mwopmodalityawarewidthwiseoperation,
+      title={MWOP: Modality-aware Width-wise Operation Pruning for Efficient MLLMs}, 
+      author={Xudong Wang and Hao Wu and Haozhe Hu and Peiran Yin and Xinghao Chen and Yunpu Ma and Wei Zhang and Xiaoyu Shen},
+      year={2026},
+      eprint={2610.01434},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.01434}, 
 }
 ```
 
