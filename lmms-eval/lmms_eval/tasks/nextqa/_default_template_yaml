@@ -1,0 +1,6 @@
+dataset_path: lmms-lab/NExTQA
+dataset_kwargs:
+  video: true
+metadata:
+  version: 0.0.1
+  load_package: true

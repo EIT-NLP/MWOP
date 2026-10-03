@@ -1,0 +1,7 @@
+dataset_path: Lin-Chen/MMStar
+task: mmstar
+tag: []
+doc_to_visual: !function 'utils.mmstar_doc_to_visual'
+doc_to_text: !function 'utils.mmstar_doc_to_text'
+process_results: !function 'utils.mmstar_process_results'
+include: _default_template_yaml

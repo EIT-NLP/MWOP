@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mwop-ov-acceleration-environment"
+version = "0.1.0"
+description = "OV-7B decoder benchmark environment"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch==2.11.0",
+    "torchvision==0.26.0",
+    "pillow==12.3.0",
+    "triton==3.6.0",
+    "transformers==5.12.1",
+    "flash-attn==2.8.3",
+    "einops==0.8.2",
+    "nvtx==0.2.16",
+    "safetensors==0.8.0",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.mwop.runtime]
+source = "environment.reference.json"
+torch-build = "2.11.0+cu130"
+cuda-build = "13.0"
+einops-release = "0.8.2"

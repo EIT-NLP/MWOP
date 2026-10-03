@@ -1,0 +1,24 @@
+{
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "packages": {
+    "torch": "2.11.0",
+    "triton": "3.6.0",
+    "transformers": "5.12.1",
+    "flash-attn": "2.8.3",
+    "einops": "0.9.0.dev0",
+    "nvtx": "0.2.16",
+    "safetensors": "0.8.0"
+  },
+  "input_shape": [
+    1,
+    3252,
+    3584
+  ],
+  "scope": "Decoder prefill, fresh KV, final norm, final-token LM head and argmax; CUDA Graph. No vision frontend or online selectors.",
+  "input_kind": "Real checkpoint, synthetic embedding-table input, seed17; native model rotary positions.",
+  "source": "OV MWOP_z run manifest dated 2026-09-21",
+  "ffn_alignment": 1,
+  "einops_note": "The development build source commit is unspecified."
+}
