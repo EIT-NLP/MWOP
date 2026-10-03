@@ -58,19 +58,6 @@ If you find this work useful for your research and applications, please consider
 - **Compatibility with Token Pruning**: Can be combined with token compression methods for further inference acceleration.
 - **Practical GPU Acceleration:** Implements Triton kernels that skip pruned attention regions and packs retained visual FFN channels into compact weight matrices for faster decoder prefill.
 
-Results for **OV-7B** from the [MWOP paper](https://arxiv.org/abs/2610.01434):
-
-| Method | Decoder TFLOPs | Prefill latency (ms) | Speedup |
-| --- | ---: | ---: | ---: |
-| Dense OV-7B | 44.31 | 237.0 | 1.0× |
-| MWOP | 25.17 | 152.1 | 1.6× |
-| ZOO | 21.75 | 119.0 | 2.0× |
-| MWOP + ZOO | 12.37 | 81.2 | 2.9× |
-| PyramidDrop | 21.96 | 124.9 | 1.9× |
-| MWOP + PyramidDrop | 13.65 | 88.2 | 2.7× |
-
-MWOP retains **99.7% average task performance** and **56.8% of dense decoder FLOPs** on OV-7B. Latency measures fixed-shape decoder prefill on an NVIDIA A100 40GB, excluding the vision encoder, projector, and online token selection. The logical unpadded estimate is **25.1237 TFLOPs**; packing each retained FFN width to 64 yields **25.1724 TFLOPs**. This accounts numerically for the table's 25.17 but does not establish its historical packing setting. Logical and packed costs are reported separately for all methods. See [acceleration details](acceleration/README.md) for the calculation and timing scope.
-
 ## 📚 Contents <a id="contents"></a>
 
 - [News](#news): Preprint announcements and project updates.
@@ -245,6 +232,21 @@ The script checks CUDA, acceleration imports, and the HF OV-7B model configurati
 `SPEED_ALIGNMENT=64` is the default: retained FFN widths are zero-padded to multiples of 64 for efficient matrix multiplication, preserving the pruning mask. Set it to 1 for exact-width packing, which can be slower despite slightly fewer FLOPs. `SPEED_TILES` defaults to the supplied validated attention tile plan. `SPEED_REP` and `SPEED_SAMPLES` control timing repetitions and samples. The default run measures Dense/MWOP, MWOP + PyramidDrop, and MWOP + ZOO serially, producing `REPORT.md`, `summary.json`, and per-method measurement files under `outputs/ov_speed/`, plus `theory_logical.json` and `theory_packed.json` for the configured alignment. A failed method stops the run. It uses synthetic embeddings and fixed token/channel schedules, with numerical checks against the corresponding reference. Online token scoring and sorting are outside the timing scope.
 
 Native merged checkpoints cannot be passed directly to this HF loader. A conversion/export tool and a recovered HF checkpoint are not included. The [acceleration guide](acceleration/README.md) describes software versions and measurement scope.
+
+## ✨ Results <a id="results"></a>
+Results for **OV-7B** from the [MWOP paper](https://arxiv.org/abs/2610.01434):
+
+| Method | Decoder TFLOPs | Prefill latency (ms) | Speedup |
+| --- | ---: | ---: | ---: |
+| Dense OV-7B | 44.31 | 237.0 | 1.0× |
+| MWOP | 25.17 | 152.1 | 1.6× |
+| ZOO | 21.75 | 119.0 | 2.0× |
+| MWOP + ZOO | 12.37 | 81.2 | 2.9× |
+| PyramidDrop | 21.96 | 124.9 | 1.9× |
+| MWOP + PyramidDrop | 13.65 | 88.2 | 2.7× |
+
+MWOP retains **99.7% average task performance** and **56.8% of dense decoder FLOPs** on OV-7B. Latency measures fixed-shape decoder prefill on an NVIDIA A100 40GB, excluding the vision encoder, projector, and online token selection. The logical unpadded estimate is **25.1237 TFLOPs**; packing each retained FFN width to 64 yields **25.1724 TFLOPs**. This accounts numerically for the table's 25.17 but does not establish its historical packing setting. Logical and packed costs are reported separately for all methods. See [acceleration details](acceleration/README.md) for the calculation and timing scope.
+
 
 ## 📄 License <a id="license"></a>
 
